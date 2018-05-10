@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fourthbutton.telematics.pds.mapper.VhlProfileMapper">
+
+	<resultMap id="BaseResultMap"
+		type="com.fourthbutton.telematics.pds.entity.VhlProfile">
+		<result column="VIN" property="vin" jdbcType="VARCHAR" />
+		<result column="CUSTOMER_NAME" property="customerName"
+			jdbcType="VARCHAR" />
+		<result column="VHL_COLOR_ID" property="vhlColorId" jdbcType="VARCHAR" />
+		<result column="VHL_LICENCE" property="vhlLicence" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="VHL_BAND_ID" property="vhlBandId" jdbcType="VARCHAR" />
+		<result column="VHL_SERIES_ID" property="vhlSeriesId" jdbcType="VARCHAR" />
+		<result column="VHL_TYPE_ID" property="vhlTypeId" jdbcType="VARCHAR" />
+		<result column="VHL_CONFIG_NAME" property="vhlConfigName"
+			jdbcType="VARCHAR" />
+		<result column="VHL_STATUS" property="vhlStatus" jdbcType="VARCHAR" />
+		<result column="SERVICE_LEVEL_ID" property="serviceLevelId"
+			jdbcType="VARCHAR" />
+		<result column="CONTRACT_ID" property="contractId" jdbcType="VARCHAR" />
+		<result column="INSURANCE_COMPANY" property="insuranceCompany"
+			jdbcType="VARCHAR" />
+		<result column="INSURANCE_NO" property="insuranceNo" jdbcType="VARCHAR" />
+		<result column="DUE_DATE" property="dueDate" jdbcType="DATE" />
+		<result column="SALE_DT" property="saleDt" jdbcType="VARCHAR" />
+		<result column="LANGUAGE_USE" property="languageUse" jdbcType="VARCHAR" />
+		<result column="RECORD_STATUS" property="recordStatus"
+			jdbcType="CHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+		<result column="OEM_ID" property="oemId" jdbcType="VARCHAR" />
+		<result column="UPD_VER" property="updVer" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		VIN, CUSTOMER_NAME, VHL_COLOR_ID,
+		VHL_LICENCE, REMARK,
+		VHL_BAND_ID,
+		VHL_SERIES_ID, VHL_TYPE_ID, VHL_CONFIG_NAME,
+		VHL_STATUS,
+		SERVICE_LEVEL_ID, CONTRACT_ID,
+		INSURANCE_COMPANY, INSURANCE_NO,
+		DUE_DATE,
+		SALE_DT, LANGUAGE_USE, RECORD_STATUS,
+		CREATE_TIME,
+		UPDATE_TIME, USER_ID,
+		OEM_ID, UPD_VER
+	</sql>
+	
+	<select id="findByVIN" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from vhl_profile
+		where VIN = #{vin,jdbcType=VARCHAR}
+	</select>
+	<insert id="insert" parameterType="com.fourthbutton.telematics.pds.entity.VhlProfile">
+	insert into vhl_profile values(#{id,jdbcType=VARCHAR},#{vin,jdbcType=VARCHAR},
+		#{customerName,jdbcType=VARCHAR},#{vhlColorId,jdbcType=VARCHAR},
+		#{vhlLicence,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},
+		#{vhlBandId,jdbcType=VARCHAR},#{vhlSeriesId,jdbcType=VARCHAR},
+		#{vhlTypeId,jdbcType=VARCHAR},#{vhlConfigName,jdbcType=VARCHAR},
+		#{vhlStatus,jdbcType=VARCHAR},#{serviceLevelId,jdbcType=VARCHAR},
+		#{contractId,jdbcType=VARCHAR},#{insuranceCompany,jdbcType=VARCHAR},
+		#{insuranceNo,jdbcType=VARCHAR},#{dueDate,jdbcType=TIMESTAMP},
+		#{saleDt,jdbcType=VARCHAR},#{languageUse,jdbcType=VARCHAR},
+		#{recordStatus,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},
+		#{updateTime,jdbcType=TIMESTAMP},#{userId,jdbcType=VARCHAR},
+		#{oemId,jdbcType=VARCHAR},#{updVer,jdbcType=VARCHAR}
+	)
+	</insert>
+	<update id="update" parameterType="com.fourthbutton.telematics.pds.entity.VhlProfile">
+		update vhl_profile
+		<set>
+			
+			<if test="customerName !=null">
+				CUSTOMER_NAME=#{customerName},
+			</if>
+			<if test="vhlColorId != null">
+				VHL_COLOR_ID=#{vhlColorId},
+			</if>
+			<if test="vhlLicence != null">
+				VHL_LICENCE=#{vhlLicence},
+			</if>
+			<if test="remark != null">
+				REMARK=#{remark},
+			</if>
+			<if test="vhlBandId != null">
+				VHL_BAND_ID=#{vhlBandId},
+			</if>
+			<if test="vhlSeriesId != null">
+				VHL_SERIES_ID=#{vhlSeriesId},
+			</if>
+			<if test="vhlTypeId != null">
+				VHL_TYPE_ID=#{vhlTypeId},
+			</if>
+			<if test="vhlConfigName != null">
+				VHL_CONFIG_NAME=#{vhlConfigName},
+			</if>
+			<if test="vhlStatus != null">
+				VHL_STATUS=#{vhlStatus},
+			</if>
+			<if test="serviceLevelId != null">
+				SERVICE_LEVEL_ID=#{serviceLevelId},
+			</if>
+			<if test="contractId != null">
+				CONTRACT_ID=#{contractId},
+			</if>
+			<if test="insuranceCompany != null">
+				INSURANCE_COMPANY=#{insuranceCompany},
+			</if>
+			<if test="insuranceNo != null">
+				INSURANCE_NO=#{insuranceNo},
+			</if>
+			<if test="dueDate != null">
+				DUE_DATE=#{dueDate},
+			</if>
+			<if test="saleDt != null">
+				SALE_DT=#{saleDt},
+			</if>
+			<if test="languageUse != null">
+				LANGUAGE_USE=#{languageUse},
+			</if>
+			<if test="recordStatus != null">
+				RECORD_STATUS=#{recordStatus},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME=#{createTime},
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME=#{updateTime},
+			</if>
+			<if test="userId != null">
+				USER_ID=#{userId},
+			</if>
+			<if test="oemId != null">
+				OEM_ID=#{oemId},
+			</if>
+			<if test="updVer != null">
+				UPD_VER=#{updVer}
+			</if>
+		</set>
+		<where>
+			<if test="vin !=null">
+				and VIN = #{vin,jdbcType=VARCHAR} 
+			</if>
+		</where>
+	</update>
+	
+</mapper>

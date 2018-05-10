@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fourthbutton.telematics.pds.mapper.ChannelMapper">
+	<resultMap id="BaseResultMap"
+		type="com.fourthbutton.telematics.pds.entity.Channel">
+		<id column="CHANNEL_ID" property="channelId" jdbcType="INTEGER" />
+		<result column="BUSSINESS_GROUP_ID" property="bussinessGroupId"
+			jdbcType="INTEGER" />
+		<result column="PLUGIN_ID" property="pluginId" jdbcType="INTEGER" />
+		<result column="PORT" property="port" jdbcType="VARCHAR" />
+		<result column="RECORD_STATUS" property="recordStatus"
+			jdbcType="CHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs"
+		type="com.fourthbutton.telematics.pds.entity.Channel" extends="BaseResultMap">
+		<result column="CONFIGURATION" property="configuration"
+			jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		CHANNEL_ID, BUSSINESS_GROUP_ID, PLUGIN_ID, PORT,
+		RECORD_STATUS, CREATE_TIME,
+		UPDATE_TIME,
+		USER_ID
+	</sql>
+	<sql id="Blob_Column_List">
+		CONFIGURATION
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from channel
+		where CHANNEL_ID = #{channelId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		channel
+		where CHANNEL_ID = #{channelId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.fourthbutton.telematics.pds.entity.Channel">
+		insert into channel
+		(CHANNEL_ID, BUSSINESS_GROUP_ID, PLUGIN_ID,
+		PORT, RECORD_STATUS,
+		CREATE_TIME,
+		UPDATE_TIME, USER_ID, CONFIGURATION
+		)
+		values
+		(#{channelId,jdbcType=INTEGER}, #{bussinessGroupId,jdbcType=INTEGER},
+		#{pluginId,jdbcType=INTEGER},
+		#{port,jdbcType=VARCHAR},
+		#{recordStatus,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP},
+		#{updateTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=VARCHAR},
+		#{configuration,jdbcType=LONGVARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.fourthbutton.telematics.pds.entity.Channel">
+		insert into channel
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="channelId != null">
+				CHANNEL_ID,
+			</if>
+			<if test="bussinessGroupId != null">
+				BUSSINESS_GROUP_ID,
+			</if>
+			<if test="pluginId != null">
+				PLUGIN_ID,
+			</if>
+			<if test="port != null">
+				PORT,
+			</if>
+			<if test="recordStatus != null">
+				RECORD_STATUS,
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME,
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME,
+			</if>
+			<if test="userId != null">
+				USER_ID,
+			</if>
+			<if test="configuration != null">
+				CONFIGURATION,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="channelId != null">
+				#{channelId,jdbcType=INTEGER},
+			</if>
+			<if test="bussinessGroupId != null">
+				#{bussinessGroupId,jdbcType=INTEGER},
+			</if>
+			<if test="pluginId != null">
+				#{pluginId,jdbcType=INTEGER},
+			</if>
+			<if test="port != null">
+				#{port,jdbcType=VARCHAR},
+			</if>
+			<if test="recordStatus != null">
+				#{recordStatus,jdbcType=CHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="configuration != null">
+				#{configuration,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.fourthbutton.telematics.pds.entity.Channel">
+		update channel
+		<set>
+			<if test="bussinessGroupId != null">
+				BUSSINESS_GROUP_ID =
+				#{bussinessGroupId,jdbcType=INTEGER},
+			</if>
+			<if test="pluginId != null">
+				PLUGIN_ID = #{pluginId,jdbcType=INTEGER},
+			</if>
+			<if test="port != null">
+				PORT = #{port,jdbcType=VARCHAR},
+			</if>
+			<if test="recordStatus != null">
+				RECORD_STATUS = #{recordStatus,jdbcType=CHAR},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="userId != null">
+				USER_ID = #{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="configuration != null">
+				CONFIGURATION = #{configuration,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where CHANNEL_ID = #{channelId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fourthbutton.telematics.pds.entity.Channel">
+		update
+		channel
+		set BUSSINESS_GROUP_ID = #{bussinessGroupId,jdbcType=INTEGER},
+		PLUGIN_ID = #{pluginId,jdbcType=INTEGER},
+		PORT =
+		#{port,jdbcType=VARCHAR},
+		RECORD_STATUS =
+		#{recordStatus,jdbcType=CHAR},
+		CREATE_TIME =
+		#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_TIME =
+		#{updateTime,jdbcType=TIMESTAMP},
+		USER_ID = #{userId,jdbcType=VARCHAR},
+		CONFIGURATION = #{configuration,jdbcType=LONGVARCHAR}
+		where CHANNEL_ID
+		= #{channelId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.fourthbutton.telematics.pds.entity.Channel">
+		update channel
+		set
+		BUSSINESS_GROUP_ID = #{bussinessGroupId,jdbcType=INTEGER},
+		PLUGIN_ID =
+		#{pluginId,jdbcType=INTEGER},
+		PORT = #{port,jdbcType=VARCHAR},
+		RECORD_STATUS = #{recordStatus,jdbcType=CHAR},
+		CREATE_TIME =
+		#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_TIME =
+		#{updateTime,jdbcType=TIMESTAMP},
+		USER_ID = #{userId,jdbcType=VARCHAR}
+		where CHANNEL_ID = #{channelId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 根据VIN查询channel -->
+	<select id="findChannelByVin" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+  <![CDATA[
+     select a.*,b.DEVICE_ID from channel a inner join device_profile b on a.CHANNEL_ID = b.CHANNEL_ID
+     where b.VIN = #{vin,jdbcType=VARCHAR}
+     order by a.CHANNEL_ID
+     ]]>
+	</select>
+
+	<select id="findChannelByInstanceId" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select * from channel c inner join channel_instance ci
+		on c.CHANNEL_ID =
+		ci.CHANNEL_ID where ci.CHANNEL_INSTANCE_ID =
+		#{instanceId}
+	</select>
+
+	<select id="findResults" resultMap="ResultMapWithBLOBs"
+		parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from channel where RECORD_STATUS = 'Y'
+	</select>
+
+
+	<select id="getPluginIdByChannelId" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from channel where CHANNEL_ID =
+		#{channelId}
+	</select>
+</mapper>

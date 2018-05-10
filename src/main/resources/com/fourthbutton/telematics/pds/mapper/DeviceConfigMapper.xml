@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fourthbutton.telematics.pds.mapper.DeviceConfigMapper">
+
+	<resultMap id="BaseResultMap"
+		type="com.fourthbutton.telematics.pds.entity.DeviceConfig">
+		<id column="DEVICE_CONFIG_ID" property="deviceConfigId" jdbcType="VARCHAR" />
+		<result column="SUID" property="suid" jdbcType="VARCHAR" />
+		<result column="CONFIG_ITEM_ID" property="configItemId"
+			jdbcType="INTEGER" />
+		<result column="CONFIG_ITEM_VALUE" property="configItemValue"
+			jdbcType="VARCHAR" />
+		<result column="RECORD_STATUS" property="recordStatus"
+			jdbcType="BOOLEAN" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		DEVICE_CONFIG_ID,SUID,CONFIG_ITEM_ID,CONFIG_ITEM_VALUE,RECORD_STATUS,CREATE_TIME,UPDATE_TIME,USER_ID
+	</sql>
+
+	<select id="getConfigItemValueByConfigItemId" parameterType="INTEGER"
+		resultType="STRING">
+		select
+		CONFIG_ITEM_VALUE
+		from device_config
+		where
+		CONFIG_ITEM_ID = #{_parameter,jdbcType=VARCHAR}
+	</select>
+
+	<update id="updateConfigration" parameterType="com.fourthbutton.telematics.pds.entity.DeviceConfig">
+		update device_config
+		<set>
+			<if test="configItemValue!= null">
+				CONFIG_ITEM_VALUE = #{configItemValue,jdbcType=VARCHAR},
+			</if>
+			<if test="recordStatus!= null">
+				RECORD_STATUS =
+				#{recordStatus,jdbcType=CHAR},
+			</if>
+			<if test="updateTime!= null">
+				UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="userId!= null">
+				USER_ID = #{userId,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<where>
+			<if test="configItemId != null">
+				and CONFIG_ITEM_ID = #{configItemId,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</update>
+
+	<insert id="insertConfigration" parameterType="com.fourthbutton.telematics.pds.entity.DeviceConfig">
+		insert into
+		device_config(DEVICE_CONFIG_ID,SUID,CONFIG_ITEM_ID,CONFIG_ITEM_VALUE,RECORD_STATUS,CREATE_TIME,UPDATE_TIME,USER_ID)
+		values(#{deviceConfigId,jdbcType=VARCHAR},#{suid,jdbcType=VARCHAR},#{configItemId,jdbcType=INTEGER},#{configItemValue,jdbcType=VARCHAR},#{recordStatus,jdbcType=CHAR},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{userId,jdbcType=VARCHAR})
+	</insert>
+
+	<select id="checkConfigItemIsExist" parameterType="INTEGER"
+		resultType="INTEGER">
+		select 1 from device_config where CONFIG_ITEM_ID =
+		#{_parameter,jdbcType=VARCHAR} limit
+		1
+	</select>
+</mapper>

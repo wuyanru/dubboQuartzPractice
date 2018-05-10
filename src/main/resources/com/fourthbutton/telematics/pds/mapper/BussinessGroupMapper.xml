@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fourthbutton.telematics.pds.mapper.BussinessGroupMapper" >
+  <resultMap id="BaseResultMap" type="com.fourthbutton.telematics.pds.entity.BussinessGroup" >
+    <id column="BUSSINESS_GROUP_ID" property="bussinessGroupId" jdbcType="INTEGER" />
+    <result column="GROUP_NAME" property="groupName" jdbcType="VARCHAR" />
+    <result column="GATEWAY_ID" property="gatewayId" jdbcType="INTEGER" />
+    <result column="APP_ID" property="appId" jdbcType="VARCHAR" />
+    <result column="APP_KEY" property="appKey" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="CHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.fourthbutton.telematics.pds.entity.BussinessGroup" extends="BaseResultMap" >
+    <result column="THIRD_PARTY_ENTRENCE_CONFIGURATION" property="thirdPartyEntrenceConfiguration" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    BUSSINESS_GROUP_ID, GROUP_NAME, GATEWAY_ID, APP_ID, APP_KEY, RECORD_STATUS, CREATE_TIME, 
+    UPDATE_TIME, USER_ID
+  </sql>
+  <sql id="Blob_Column_List" >
+    THIRD_PARTY_ENTRENCE_CONFIGURATION
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from bussiness_group
+    where BUSSINESS_GROUP_ID = #{bussinessGroupId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bussiness_group
+    where BUSSINESS_GROUP_ID = #{bussinessGroupId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fourthbutton.telematics.pds.entity.BussinessGroup" >
+    insert into bussiness_group (BUSSINESS_GROUP_ID, GROUP_NAME, GATEWAY_ID, 
+      APP_ID, APP_KEY, RECORD_STATUS, 
+      CREATE_TIME, UPDATE_TIME, USER_ID, 
+      THIRD_PARTY_ENTRENCE_CONFIGURATION)
+    values (#{bussinessGroupId,jdbcType=INTEGER}, #{groupName,jdbcType=VARCHAR}, #{gatewayId,jdbcType=INTEGER}, 
+      #{appId,jdbcType=VARCHAR}, #{appKey,jdbcType=VARCHAR}, #{recordStatus,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=VARCHAR}, 
+      #{thirdPartyEntrenceConfiguration,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fourthbutton.telematics.pds.entity.BussinessGroup" >
+    insert into bussiness_group
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bussinessGroupId != null" >
+        BUSSINESS_GROUP_ID,
+      </if>
+      <if test="groupName != null" >
+        GROUP_NAME,
+      </if>
+      <if test="gatewayId != null" >
+        GATEWAY_ID,
+      </if>
+      <if test="appId != null" >
+        APP_ID,
+      </if>
+      <if test="appKey != null" >
+        APP_KEY,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="thirdPartyEntrenceConfiguration != null" >
+        THIRD_PARTY_ENTRENCE_CONFIGURATION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bussinessGroupId != null" >
+        #{bussinessGroupId,jdbcType=INTEGER},
+      </if>
+      <if test="groupName != null" >
+        #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="gatewayId != null" >
+        #{gatewayId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="appKey != null" >
+        #{appKey,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdPartyEntrenceConfiguration != null" >
+        #{thirdPartyEntrenceConfiguration,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fourthbutton.telematics.pds.entity.BussinessGroup" >
+    update bussiness_group
+    <set >
+      <if test="groupName != null" >
+        GROUP_NAME = #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="gatewayId != null" >
+        GATEWAY_ID = #{gatewayId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null" >
+        APP_ID = #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="appKey != null" >
+        APP_KEY = #{appKey,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdPartyEntrenceConfiguration != null" >
+        THIRD_PARTY_ENTRENCE_CONFIGURATION = #{thirdPartyEntrenceConfiguration,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where BUSSINESS_GROUP_ID = #{bussinessGroupId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fourthbutton.telematics.pds.entity.BussinessGroup" >
+    update bussiness_group
+    set GROUP_NAME = #{groupName,jdbcType=VARCHAR},
+      GATEWAY_ID = #{gatewayId,jdbcType=INTEGER},
+      APP_ID = #{appId,jdbcType=VARCHAR},
+      APP_KEY = #{appKey,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      USER_ID = #{userId,jdbcType=VARCHAR},
+      THIRD_PARTY_ENTRENCE_CONFIGURATION = #{thirdPartyEntrenceConfiguration,jdbcType=LONGVARCHAR}
+    where BUSSINESS_GROUP_ID = #{bussinessGroupId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fourthbutton.telematics.pds.entity.BussinessGroup" >
+    update bussiness_group
+    set GROUP_NAME = #{groupName,jdbcType=VARCHAR},
+      GATEWAY_ID = #{gatewayId,jdbcType=INTEGER},
+      APP_ID = #{appId,jdbcType=VARCHAR},
+      APP_KEY = #{appKey,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      USER_ID = #{userId,jdbcType=VARCHAR}
+    where BUSSINESS_GROUP_ID = #{bussinessGroupId,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 根据appid查询bussiness_group信息 -->
+  <select id="findBussinessGroupByAppId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <![CDATA[
+     select * from bussiness_group where APP_ID = #{appId,jdbcType=VARCHAR} order by BUSSINESS_GROUP_ID
+     ]]>
+  </select>
+  <select id="findBussinessGroupByVin" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+  <![CDATA[
+     select c.* from channel a 
+		inner join device_profile b on a.CHANNEL_ID = b.CHANNEL_ID
+		inner join bussiness_group c on a.BUSSINESS_GROUP_ID = c.BUSSINESS_GROUP_ID
+		where b.VIN = #{vin,jdbcType=VARCHAR}
+		order by c.BUSSINESS_GROUP_ID
+     ]]>
+  </select>
+  <select id="findResults" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from bussiness_group where RECORD_STATUS = 'Y'
+  </select>
+</mapper>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property resource="application.properties" />
+	<if condition='isDefined("catalina.base")'>
+		<then>
+			<appender name="FILE"
+				class="ch.qos.logback.core.rolling.RollingFileAppender">
+				<!-- <file>${catalina.base}/logs/telematics.pds.log</file> -->
+				<append>true</append>
+				<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+					<!-- Daily rollover -->
+					<fileNamePattern>${catalina.base}/logs/telematics.pds.%d{yyyy-MM-dd}.log.gz
+					</fileNamePattern>
+					<!-- Keep 30 days' worth of history -->
+					<maxHistory>30</maxHistory>
+					<TimeBasedFileNamingAndTriggeringPolicy
+						class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+						<MaxFileSize>500MB</MaxFileSize>
+					</TimeBasedFileNamingAndTriggeringPolicy>
+				</rollingPolicy>
+				<encoder>
+					<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} {%t} %-5level [PDS] %logger -
+						%msg%n
+					</pattern>
+				</encoder>
+			</appender>
+			<root level="${logback.log.level}">
+				<appender-ref ref="FILE" />
+			</root>
+		</then>
+
+	</if>
+	
+	    <appender name="stash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+   <destination>172.16.64.65:5000</destination>
+   <!-- encoder is required -->
+   <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+</appender>
+
+
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} {%t} %-5level [PDS] %logger -
+				%msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	<root level="${logback.log.level}">
+		<if condition='isDefined("catalina.base")'>
+			<then>
+				<appender-ref ref="CONSOLE" />
+			</then>
+		</if>
+		  <appender-ref ref="stash"/> 
+	</root>
+	<logger name="org.apache.zookeeper.ClientCnxn" level="${logback.log.level}" />
+	<logger
+		name="com.alibaba.dubbo.remoting.exchange.support.header.HeartbeatHandler"
+		level="${logback.log.level}" />
+</configuration>

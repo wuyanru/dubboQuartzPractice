@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fourthbutton.telematics.pds.mapper.DeviceConfigItemMapper">
+
+	<resultMap id="BaseResultMap"
+		type="com.fourthbutton.telematics.pds.entity.DeviceConfigItem">
+		<id column="CONFIG_ITEM_ID" property="configItemId" jdbcType="INTEGER" />
+		<result column="PLUGIN_ID" property="pluginId" jdbcType="INTEGER" />
+		<result column="ITEM_EXPLAIN" property="itemExplain" jdbcType="VARCHAR" />
+		<result column="VALUE_TYPE" property="valueType" jdbcType="INTEGER" />
+		<result column="VALUE_PATTERN" property="valuePattern"
+			jdbcType="VARCHAR" />
+		<result column="DEFAULT_VALUE" property="defaultValue"
+			jdbcType="VARCHAR" />
+		<result column="VALUE_EXPLAIN" property="valueExplain"
+			jdbcType="VARCHAR" />
+		<result column="UNIT" property="unit" jdbcType="VARCHAR" />
+		<result column="ITEM_NO" property="itemNo" jdbcType="VARCHAR" />
+		<result column="ITEM_NAME" property="itemName" jdbcType="VARCHAR" />
+		<result column="SORT" property="sort" jdbcType="INTEGER" />
+		<result column="RECORD_STATUS" property="recordStatus"
+			jdbcType="BOOLEAN" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		CONFIG_ITEM_ID,PLUGIN_ID,ITEM_EXPLAIN,VALUE_TYPE,VALUE_PATTERN,DEFAULT_VALUE,VALUE_EXPLAIN,UNIT,ITEM_NO,ITEM_NAME,SORT,RECORD_STATUS,CREATE_TIME,UPDATE_TIME,USER_ID
+	</sql>
+
+	<select id="getDeviceConfigItemByPluginId" resultMap="BaseResultMap"
+		parameterType="Integer">
+		select
+		<include refid="Base_Column_List" />
+		from device_config_item
+		where RECORD_STATUS="Y"
+		<if test="_parameter != null">
+			and PLUGIN_ID = #{_parameter,jdbcType=INTEGER}
+		</if>
+	</select>
+
+	<select id="getConfigItemId" resultType="INTEGER">
+		select CONFIG_ITEM_ID
+		from
+		device_config_item where ITEM_NO =
+		#{itemNo}
+		and
+		PLUGIN_ID=#{pluginId}
+	</select>
+</mapper>

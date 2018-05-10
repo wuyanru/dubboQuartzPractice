@@ -1,0 +1,876 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fourthbutton.telematics.pds.mapper.DeviceProfileMapper">
+	<resultMap id="BaseResultMap" type="com.fourthbutton.telematics.pds.entity.DeviceProfile">
+		<id column="DEVICE_ID" property="deviceId" jdbcType="VARCHAR" />
+		<result column="CHANNEL_ID" property="channelId" jdbcType="INTEGER" />
+		<result column="OWNER_ID" property="ownerId" jdbcType="VARCHAR" />
+		<result column="DEVICE_TYPE" property="deviceType" jdbcType="VARCHAR" />
+		<result column="TU_ID_TYPE" property="tuIdType" jdbcType="VARCHAR" />
+		<result column="SW_ID" property="swId" jdbcType="VARCHAR" />
+		<result column="PDSN" property="pdsn" jdbcType="VARCHAR" />
+		<result column="VIN" property="vin" jdbcType="VARCHAR" />
+		<result column="PRODUCT_VERSION" property="productVersion"
+			jdbcType="VARCHAR" />
+		<result column="TELECOM_PROVIDER" property="telecomProvider"
+			jdbcType="VARCHAR" />
+		<result column="IMSI" property="imsi" jdbcType="VARCHAR" />
+		<result column="IMEI" property="imei" jdbcType="VARCHAR" />
+		<result column="ICCID" property="iccid" jdbcType="VARCHAR" />
+		<result column="MSISDN" property="msisdn" jdbcType="VARCHAR" />
+		<result column="SSID" property="ssid" jdbcType="VARCHAR" />
+		<result column="WIFI_PIN" property="wifiPin" jdbcType="VARCHAR" />
+		<result column="DEVICE_STATUS" property="deviceStatus"
+			jdbcType="VARCHAR" />
+		<result column="PIN" property="pin" jdbcType="VARCHAR" />
+		<result column="TELECOM_PKG_ID" property="telecomPkgId"
+			jdbcType="VARCHAR" />
+		<result column="ENROLL_FLAG" property="enrollFlag" jdbcType="VARCHAR" />
+		<result column="DESTINATION" property="destination" jdbcType="VARCHAR" />
+		<result column="EOL_DATE" property="eolDate" jdbcType="DATE" />
+		<result column="RECORD_STATUS" property="recordStatus"
+			jdbcType="CHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+		<result column="UPD_VER" property="updVer" jdbcType="VARCHAR" />
+		<result column="HARDWARE_VERSION" property="hardwareVersion"
+			jdbcType="VARCHAR" />
+		<result column="SUPPLIER" property="supplier" jdbcType="VARCHAR" />
+		<result column="DEVICE_SN" property="deviceSn" jdbcType="VARCHAR" />
+		<result column="OEM_ID" property="oemId" jdbcType="VARCHAR" />
+		<result column="PURCHASE_BATCH" property="purchaseBatch"
+			jdbcType="VARCHAR" />
+		<result column="DELIVERY_AREA" property="deliveryArea"
+			jdbcType="VARCHAR" />
+		<result column="DEVICE_MODEL" property="deviceModel" jdbcType="VARCHAR" />
+		<result column="DEVICE_SET_ID" property="deviceSetId" jdbcType="VARCHAR" />
+		<result column="HAS_POSITION" property="hasPosition" jdbcType="TINYINT" />
+	</resultMap>
+
+	<resultMap id="authorizationResultMap"
+		type="com.fourthbutton.telematics.pds.entity.DeviceProfile">
+		<id column="DEVICE_ID" property="deviceId" jdbcType="VARCHAR" />
+		<result column="CHANNEL_ID" property="channelId" jdbcType="INTEGER" />
+		<result column="VIN" property="vin" jdbcType="VARCHAR" />
+		<result column="DEVICE_SN" property="deviceSn" jdbcType="VARCHAR" />
+		<result column="IMEI" property="imei" jdbcType="VARCHAR" />
+		<result column="ICCID" property="iccid" jdbcType="VARCHAR" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<resultMap id="updateMap" type="com.fourthbutton.telematics.pds.entity.DeviceProfile">
+		<id column="DEVICE_ID" property="deviceId" jdbcType="VARCHAR" />
+		<result column="VIN" property="vin" jdbcType="VARCHAR" />
+		<result column="DEVICE_SN" property="deviceSn" jdbcType="VARCHAR" />
+		<result column="RECORD_STATUS" property="recordStatus" jdbcType="CHAR" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="IMEI" property="imei" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="queryDeviceListByVINMap"
+		type="com.fourthbutton.telematics.pds.model.DeviceAndSIMInfo">
+		<result column="DEVICE_SN" property="deviceInfo.hardwareSN"
+			jdbcType="VARCHAR" />
+		<result column="DEVICE_MODEL" property="deviceInfo.hardwareModel"
+			jdbcType="VARCHAR" />
+		<result column="HARDWARE_VERSION" property="deviceInfo.hardwareVersion"
+			jdbcType="VARCHAR" />
+		<result column="SW_ID" property="deviceInfo.softwareVersion"
+			jdbcType="VARCHAR" />
+		<result column="DEVICE_DELIVERY_AREA" property="deviceInfo.area"
+			jdbcType="VARCHAR" />
+		<result column="SUPPLIER" property="deviceInfo.supply"
+			jdbcType="VARCHAR" />
+		<result column="VIN" property="deviceInfo.vin" jdbcType="VARCHAR" />
+		<result column="PURCHASE_BATCH" property="deviceInfo.batch"
+			jdbcType="VARCHAR" />
+		<result column="DEVICE_CREATE_TIME" property="deviceInfo.inputTime"
+			jdbcType="TIMESTAMP" />
+		<result column="DEVICE_STATUS" property="deviceInfo.deviceState"
+			jdbcType="VARCHAR" />
+		<result column="HAS_POSITION" property="deviceInfo.hasPosition"
+			jdbcType="TINYINT" />
+		<result column="DEVICE_SET_ID" property="deviceInfo.deviceSetID"
+			jdbcType="VARCHAR" />
+		<result column="REMARK" property="deviceInfo.remark" jdbcType="VARCHAR" />
+		<result column="installPosition" property="deviceInfo.installPosition"
+			jdbcType="VARCHAR" />
+
+		<result column="ICCID" property="simInfo.iccid" jdbcType="VARCHAR" />
+		<result column="IMSI" property="simInfo.imsi" jdbcType="VARCHAR" />
+		<result column="MSISDN" property="simInfo.msisdn" jdbcType="VARCHAR" />
+		<result column="PACKAGE_TYPE" property="simInfo.packageType"
+			jdbcType="VARCHAR" />
+		<result column="SIM_STATUS" property="simInfo.simState"
+			jdbcType="VARCHAR" />
+		<result column="BATCH_NUM" property="simInfo.batch" jdbcType="VARCHAR" />
+		<result column="SIM_DELIVERY_AREA" property="simInfo.area"
+			jdbcType="VARCHAR" />
+		<result column="SIM_CREATE_TIME" property="simInfo.inputTime"
+			jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<resultMap id="queryDeviceListBySNMap"
+		type="com.fourthbutton.telematics.pds.model.DeviceItem">
+		<result column="DEVICE_SN" property="hardwareSN" jdbcType="VARCHAR" />
+		<result column="DEVICE_MODEL" property="hardwareModel"
+			jdbcType="VARCHAR" />
+		<result column="HAS_POSITION" property="hasPosition" jdbcType="TINYINT" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		DEVICE_ID,CHANNEL_ID, OWNER_ID, DEVICE_TYPE, TU_ID_TYPE,
+		SW_ID, PDSN,
+		VIN, PRODUCT_VERSION,
+		TELECOM_PROVIDER, IMSI, IMEI, ICCID,
+		MSISDN,
+		SSID, WIFI_PIN, DEVICE_STATUS, PIN,
+		TELECOM_PKG_ID, ENROLL_FLAG,
+		DESTINATION, EOL_DATE, RECORD_STATUS, CREATE_TIME,
+		UPDATE_TIME,
+		USER_ID, UPD_VER, HARDWARE_VERSION, SUPPLIER, DEVICE_SN,
+		OEM_ID,
+		PURCHASE_BATCH, DELIVERY_AREA, DEVICE_MODEL,
+		DEVICE_SET_ID,HAS_POSITION
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from device_profile
+		where DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+	</select>
+	<select id="selectByPDSN" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from device_profile
+		where PDSN = #{pdsn,jdbcType=VARCHAR}
+	</select>
+	<select id="selectByVIN" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from device_profile
+		where VIN = #{vin,jdbcType=VARCHAR}
+	</select>
+	<select id="selectByIMEI" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from device_profile
+		where IMEI = #{imei,jdbcType=VARCHAR}
+	</select>
+	<select id="selectByIMSI" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from device_profile
+		where IMSI = #{imsi,jdbcType=VARCHAR}
+	</select>
+	<select id="selectByMSISDN" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from device_profile
+		where MSISDN = #{msIsdn,jdbcType=VARCHAR}
+	</select>
+	<select id="selectByICCID" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from device_profile
+		where ICCID = #{iccid,jdbcType=VARCHAR}
+	</select>
+	<!-- DeviceProfile selectByVIN10(String vin10); -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		device_profile
+		where DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert"
+		parameterType="com.fourthbutton.telematics.pds.entity.DeviceProfile">
+		insert into device_profile (DEVICE_ID, OWNER_ID,
+		DEVICE_TYPE,
+		TU_ID_TYPE, SW_ID, PDSN,
+		VIN, PRODUCT_VERSION,
+		TELECOM_PROVIDER,
+		IMSI, IMEI, ICCID,
+		MSISDN, SSID, WIFI_PIN,
+		DEVICE_STATUS, PIN, TELECOM_PKG_ID,
+		ENROLL_FLAG, DESTINATION, EOL_DATE,
+		RECORD_STATUS, CREATE_TIME, UPDATE_TIME,
+		USER_ID, UPD_VER,
+		HARDWARE_VERSION,
+		SUPPLIER,
+		DEVICE_SN,PURCHASE_BATCH,DELIVERY_AREA,DEVICE_MODEL,DEVICE_SET_ID,DEVICE_SET_ID,OEM_ID,HAS_POSITION
+		)
+		values
+		(#{deviceId,jdbcType=VARCHAR}, #{ownerId,jdbcType=VARCHAR},
+		#{deviceType,jdbcType=VARCHAR},
+		#{tuIdType,jdbcType=VARCHAR},
+		#{swId,jdbcType=VARCHAR}, #{pdsn,jdbcType=VARCHAR},
+		#{vin,jdbcType=VARCHAR}, #{productVersion,jdbcType=VARCHAR},
+		#{telecomProvider,jdbcType=VARCHAR},
+		#{imsi,jdbcType=VARCHAR},
+		#{imei,jdbcType=VARCHAR}, #{iccid,jdbcType=VARCHAR},
+		#{msisdn,jdbcType=VARCHAR}, #{ssid,jdbcType=VARCHAR},
+		#{wifiPin,jdbcType=VARCHAR},
+		#{deviceStatus,jdbcType=VARCHAR},
+		#{pin,jdbcType=VARCHAR}, #{telecomPkgId,jdbcType=VARCHAR},
+		#{enrollFlag,jdbcType=VARCHAR}, #{destination,jdbcType=VARCHAR},
+		#{eolDate,jdbcType=DATE},
+		#{recordStatus,jdbcType=CHAR},
+		#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+		#{userId,jdbcType=VARCHAR}, #{updVer,jdbcType=VARCHAR},
+		#{hardwareVersion,jdbcType=VARCHAR},
+		#{supplier,jdbcType=VARCHAR},
+		#{deviceSn,jdbcType=VARCHAR},
+		#{purchaseBatch,jdbcType=VARCHAR},
+		#{deliveryArea,jdbcType=VARCHAR},
+		#{deviceModel,jdbcType=VARCHAR},
+		#{deviceSetId,jdbcType=VARCHAR},
+		#{oemId,jdbcType=VARCHAR},
+		#{hasPosition,jdbcType=TINYINT}
+		)
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.fourthbutton.telematics.pds.entity.DeviceProfile">
+		insert into device_profile
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="deviceId != null">
+				DEVICE_ID,
+			</if>
+			<if test="channelId != null">
+				CHANNEL_ID,
+			</if>
+			<if test="ownerId != null">
+				OWNER_ID,
+			</if>
+			<if test="deviceType != null">
+				DEVICE_TYPE,
+			</if>
+			<if test="tuIdType != null">
+				TU_ID_TYPE,
+			</if>
+			<if test="swId != null">
+				SW_ID,
+			</if>
+			<if test="pdsn != null">
+				PDSN,
+			</if>
+			<if test="vin != null">
+				VIN,
+			</if>
+			<if test="productVersion != null">
+				PRODUCT_VERSION,
+			</if>
+			<if test="telecomProvider != null">
+				TELECOM_PROVIDER,
+			</if>
+			<if test="imsi != null">
+				IMSI,
+			</if>
+			<if test="imei != null">
+				IMEI,
+			</if>
+			<if test="iccid != null">
+				ICCID,
+			</if>
+			<if test="msisdn != null">
+				MSISDN,
+			</if>
+			<if test="ssid != null">
+				SSID,
+			</if>
+			<if test="wifiPin != null">
+				WIFI_PIN,
+			</if>
+			<if test="deviceStatus != null">
+				DEVICE_STATUS,
+			</if>
+			<if test="pin != null">
+				PIN,
+			</if>
+			<if test="telecomPkgId != null">
+				TELECOM_PKG_ID,
+			</if>
+			<if test="enrollFlag != null">
+				ENROLL_FLAG,
+			</if>
+			<if test="destination != null">
+				DESTINATION,
+			</if>
+			<if test="eolDate != null">
+				EOL_DATE,
+			</if>
+			<if test="recordStatus != null">
+				RECORD_STATUS,
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME,
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME,
+			</if>
+			<if test="userId != null">
+				USER_ID,
+			</if>
+			<if test="updVer != null">
+				UPD_VER,
+			</if>
+			<if test="hardwareVersion != null">
+				HARDWARE_VERSION,
+			</if>
+			<if test="supplier != null">
+				SUPPLIER,
+			</if>
+			<if test="deviceSn != null">
+				DEVICE_SN,
+			</if>
+			<if test="purchaseBatch != null">
+				PURCHASE_BATCH,
+			</if>
+			<if test="deliveryArea != null">
+				DELIVERY_AREA,
+			</if>
+			<if test="deviceModel != null">
+				DEVICE_MODEL,
+			</if>
+			<if test="deviceSetId != null">
+				DEVICE_SET_ID,
+			</if>
+			<if test="oemId != null">
+				OEM_ID,
+			</if>
+			<if test="hasPosition != null">
+				HAS_POSITION,
+			</if>
+			<if test="installPosition!=null">
+				installPosition,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="deviceId != null">
+				#{deviceId,jdbcType=VARCHAR},
+			</if>
+			<if test="channelId != null">
+				#{channelId,jdbcType=VARCHAR},
+			</if>
+			<if test="ownerId != null">
+				#{ownerId,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceType != null">
+				#{deviceType,jdbcType=VARCHAR},
+			</if>
+			<if test="tuIdType != null">
+				#{tuIdType,jdbcType=VARCHAR},
+			</if>
+			<if test="swId != null">
+				#{swId,jdbcType=VARCHAR},
+			</if>
+			<if test="pdsn != null">
+				#{pdsn,jdbcType=VARCHAR},
+			</if>
+			<if test="vin != null">
+				#{vin,jdbcType=VARCHAR},
+			</if>
+			<if test="productVersion != null">
+				#{productVersion,jdbcType=VARCHAR},
+			</if>
+			<if test="telecomProvider != null">
+				#{telecomProvider,jdbcType=VARCHAR},
+			</if>
+			<if test="imsi != null">
+				#{imsi,jdbcType=VARCHAR},
+			</if>
+			<if test="imei != null">
+				#{imei,jdbcType=VARCHAR},
+			</if>
+			<if test="iccid != null">
+				#{iccid,jdbcType=VARCHAR},
+			</if>
+			<if test="msisdn != null">
+				#{msisdn,jdbcType=VARCHAR},
+			</if>
+			<if test="ssid != null">
+				#{ssid,jdbcType=VARCHAR},
+			</if>
+			<if test="wifiPin != null">
+				#{wifiPin,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceStatus != null">
+				#{deviceStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="pin != null">
+				#{pin,jdbcType=VARCHAR},
+			</if>
+			<if test="telecomPkgId != null">
+				#{telecomPkgId,jdbcType=VARCHAR},
+			</if>
+			<if test="enrollFlag != null">
+				#{enrollFlag,jdbcType=VARCHAR},
+			</if>
+			<if test="destination != null">
+				#{destination,jdbcType=VARCHAR},
+			</if>
+			<if test="eolDate != null">
+				#{eolDate,jdbcType=DATE},
+			</if>
+			<if test="recordStatus != null">
+				#{recordStatus,jdbcType=CHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="updVer != null">
+				#{updVer,jdbcType=VARCHAR},
+			</if>
+			<if test="hardwareVersion != null">
+				#{hardwareVersion,jdbcType=VARCHAR},
+			</if>
+			<if test="supplier != null">
+				#{supplier,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceSn != null">
+				#{deviceSn,jdbcType=VARCHAR},
+			</if>
+			<if test="oemId != null">
+				#{oemId,jdbcType=VARCHAR},
+			</if>
+			<if test="purchaseBatch != null">
+				#{purchaseBatch,jdbcType=VARCHAR},
+			</if>
+			<if test="deliveryArea != null">
+				#{deliveryArea,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceModel != null">
+				#{deviceModel,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceSetId != null">
+				#{deviceSetId,jdbcType=VARCHAR},
+			</if>
+			<if test="hasPosition != null">
+				#{hasPosition,jdbcType=TINYINT},
+			</if>
+			<if test="installPosition!=null">
+				#{installPosition,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.fourthbutton.telematics.pds.entity.DeviceProfile">
+		update device_profile
+		<set>
+			<if test="deviceProfile.channelId != null">
+				CHANNEL_ID = #{deviceProfile.channelId,jdbcType=INTEGER},
+			</if>
+			<if test="deviceProfile.ownerId != null">
+				OWNER_ID = #{deviceProfile.ownerId,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.deviceType != null">
+				DEVICE_TYPE =
+				#{deviceProfile.deviceType,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.tuIdType != null">
+				TU_ID_TYPE = #{deviceProfile.tuIdType,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.swId != null">
+				SW_ID = #{deviceProfile.swId,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.pdsn != null">
+				PDSN = #{deviceProfile.pdsn,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.vin != null">
+				VIN = #{deviceProfile.vin,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.productVersion != null">
+				PRODUCT_VERSION =
+				#{deviceProfile.productVersion,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.telecomProvider != null">
+				TELECOM_PROVIDER =
+				#{deviceProfile.telecomProvider,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.imsi != null">
+				IMSI = #{deviceProfile.imsi,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.imei != null">
+				IMEI = #{deviceProfile.imei,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.iccid != null">
+				ICCID = #{deviceProfile.iccid,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.msisdn != null">
+				MSISDN = #{deviceProfile.msisdn,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.ssid != null">
+				SSID = #{deviceProfile.ssid,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.wifiPin != null">
+				WIFI_PIN = #{deviceProfile.wifiPin,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.deviceStatus != null">
+				DEVICE_STATUS =
+				#{deviceProfile.deviceStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.pin != null">
+				PIN = #{deviceProfile.pin,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.telecomPkgId != null">
+				TELECOM_PKG_ID =
+				#{deviceProfile.telecomPkgId,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.enrollFlag != null">
+				ENROLL_FLAG =
+				#{deviceProfile.enrollFlag,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.destination != null">
+				DESTINATION =
+				#{deviceProfile.destination,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.eolDate != null">
+				EOL_DATE = #{deviceProfile.eolDate,jdbcType=DATE},
+			</if>
+			<if test="deviceProfile.recordStatus != null">
+				RECORD_STATUS =
+				#{deviceProfile.recordStatus,jdbcType=CHAR},
+			</if>
+			<if test="deviceProfile.createTime != null">
+				CREATE_TIME = #{deviceProfile.createTime,jdbcType=date},
+			</if>
+			<if test="deviceProfile.updateTime != null">
+				UPDATE_TIME =
+				#{deviceProfile.updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deviceProfile.userId != null">
+				USER_ID = #{deviceProfile.userId,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.updVer != null">
+				UPD_VER = #{deviceProfile.updVer,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.hardwareVersion != null">
+				HARDWARE_VERSION =
+				#{deviceProfile.hardwareVersion,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.supplier != null">
+				SUPPLIER = #{deviceProfile.supplier,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.deviceSn != null">
+				DEVICE_SN = #{deviceProfile.deviceSn,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.oemId != null">
+				OEM_ID = #{deviceProfile.oemId,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.purchaseBatch != null">
+				PURCHASE_BATCH =
+				#{deviceProfile.purchaseBatch,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.deliveryArea != null">
+				DELIVERY_AREA =
+				#{deviceProfile.deliveryArea,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.deviceModel != null">
+				DEVICE_MODEL =
+				#{deviceProfile.deviceModel,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.deviceSetId != null">
+				DEVICE_SET_ID =
+				#{deviceProfile.deviceSetId,jdbcType=VARCHAR},
+			</if>
+			<if test="deviceProfile.hasPosition != null">
+				HAS_POSITION =
+				#{deviceProfile.hasPosition,jdbcType=TINYINT},
+			</if>
+			<if test="deviceProfile.remark != null">
+				REMARK = #{deviceProfile.remark,jdbcType=VARCHAR}
+			</if>
+			<if test="deviceProfile.installPosition != null">
+				installPosition =
+				#{deviceProfile.installPosition,jdbcType=VARCHAR}
+			</if>
+		</set>
+		<where>
+			<if test="deviceId != null">
+				and DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+			</if>
+			<if test="deviceModel != null">
+				and DEVICE_MODEL = #{deviceModel,jdbcType=VARCHAR}
+			</if>
+			<if test="deviceSn != null">
+				and DEVICE_SN = #{deviceSn,jdbcType=VARCHAR}
+			</if>
+			<if test="vin != null">
+				and VIN = #{vin,jdbcType=VARCHAR}
+			</if>
+			<if test="deviceSetId != null">
+				and DEVICE_SET_ID = #{deviceSetId,jdbcType=VARCHAR}
+			</if>
+			<if test="hasPosition != null">
+				and HAS_POSITION = #{hasPosition,jdbcType=TINYINT}
+			</if>
+		</where>
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.fourthbutton.telematics.pds.entity.DeviceProfile">
+		update device_profile
+		set OWNER_ID =
+		#{ownerId,jdbcType=VARCHAR},
+		DEVICE_TYPE =
+		#{deviceType,jdbcType=VARCHAR},
+		TU_ID_TYPE =
+		#{tuIdType,jdbcType=VARCHAR},
+		SW_ID = #{swId,jdbcType=VARCHAR},
+		PDSN =
+		#{pdsn,jdbcType=VARCHAR},
+		VIN = #{vin,jdbcType=VARCHAR},
+		PRODUCT_VERSION = #{productVersion,jdbcType=VARCHAR},
+		TELECOM_PROVIDER
+		= #{telecomProvider,jdbcType=VARCHAR},
+		IMSI = #{imsi,jdbcType=VARCHAR},
+		IMEI = #{imei,jdbcType=VARCHAR},
+		ICCID = #{iccid,jdbcType=VARCHAR},
+		MSISDN = #{msisdn,jdbcType=VARCHAR},
+		SSID = #{ssid,jdbcType=VARCHAR},
+		WIFI_PIN = #{wifiPin,jdbcType=VARCHAR},
+		DEVICE_STATUS =
+		#{deviceStatus,jdbcType=VARCHAR},
+		PIN = #{pin,jdbcType=VARCHAR},
+		TELECOM_PKG_ID = #{telecomPkgId,jdbcType=VARCHAR},
+		ENROLL_FLAG =
+		#{enrollFlag,jdbcType=VARCHAR},
+		DESTINATION =
+		#{destination,jdbcType=VARCHAR},
+		EOL_DATE = #{eolDate,jdbcType=DATE},
+		RECORD_STATUS = #{recordStatus,jdbcType=CHAR},
+		CREATE_TIME =
+		#{createTime,jdbcType=TIMESTAMP},
+		UPDATE_TIME =
+		#{updateTime,jdbcType=TIMESTAMP},
+		USER_ID = #{userId,jdbcType=VARCHAR},
+		UPD_VER = #{updVer,jdbcType=VARCHAR},
+		HARDWARE_VERSION =
+		#{hardwareVersion,jdbcType=VARCHAR},
+		SUPPLIER =
+		#{supplier,jdbcType=VARCHAR},
+		DEVICE_SN = #{deviceSn,jdbcType=VARCHAR}
+		where
+		DEVICE_ID =
+		#{deviceId,jdbcType=VARCHAR}
+
+	</update>
+
+	<select id="findVINBySuid" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		SELECT
+		vin
+		from
+		device_profile
+		where
+		DEVICE_ID = #{suid}
+	</select>
+
+	<select id="findSuidByVIN" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		SELECT
+		device_id
+		from
+		device_profile
+		where
+		vin = #{vin}
+	</select>
+
+	<select id="findDeviceByUserId" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select t.* from device_profile t
+		left join customer b on
+		t.OWNER_ID = b.ID
+		where b.USER_ID = #{userId}
+	</select>
+
+	<select id="findAll" resultMap="authorizationResultMap">
+		select
+		DEVICE_ID,CHANNEL_ID,VIN,DEVICE_SN,IMEI,UPDATE_TIME,ICCID
+		from
+		device_profile
+		where
+		RECORD_STATUS ='Y'
+		ORDER BY UPDATE_TIME DESC
+	</select>
+
+	<select id="findByUpdateTime" resultMap="updateMap">
+		select
+		DEVICE_ID,VIN,DEVICE_SN,RECORD_STATUS, UPDATE_TIME,IMEI
+		from
+		device_profile
+		where
+		UPDATE_TIME > #{lastupdateTime}
+		and
+		RECORD_STATUS ='Y'
+		ORDER BY
+		UPDATE_TIME DESC
+	</select>
+
+	<resultMap id="cacheData"
+		type="com.fourthbutton.telematics.pds.entity.DeviceProfile">
+		<id column="DEVICE_ID" property="deviceId" jdbcType="VARCHAR" />
+		<result column="CHANNEL_ID" property="channelId" jdbcType="INTEGER" />
+		<result column="VIN" property="vin" jdbcType="VARCHAR" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<select id="findTheCacheData" resultMap="cacheData">
+		select
+		DEVICE_ID,CHANNEL_ID,VIN,UPDATE_TIME from device_profile
+		where
+		UPDATE_TIME > #{lastupdateTime} and
+		RECORD_STATUS ='Y'
+		ORDER BY
+		UPDATE_TIME DESC
+	</select>
+
+	<select id="findByAny" resultMap="BaseResultMap"
+		parameterType="com.fourthbutton.telematics.pds.entity.DeviceProfile">
+		select
+		<include refid="Base_Column_List" />
+		from device_profile
+		where RECORD_STATUS ='Y'
+		<if test="deviceSn != null">
+			and DEVICE_SN = #{deviceSn,jdbcType=VARCHAR}
+		</if>
+		<if test="deviceModel != null">
+			and DEVICE_MODEL = #{deviceModel,jdbcType=VARCHAR}
+		</if>
+		<if test="deviceId != null">
+			and DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+		</if>
+		<if test="pdsn != null">
+			and PDSN = #{pdsn,jdbcType=VARCHAR}
+		</if>
+		<if test="vin != null">
+			and VIN = #{vin,jdbcType=VARCHAR}
+		</if>
+		<if test="imei != null">
+			and IMEI = #{imei,jdbcType=VARCHAR}
+		</if>
+		<if test="imsi != null">
+			and IMSI = #{imsi,jdbcType=VARCHAR}
+		</if>
+		<if test="msisdn != null">
+			and MSISDN = #{msisdn,jdbcType=VARCHAR}
+		</if>
+		<if test="iccid != null">
+			and ICCID = #{iccid,jdbcType=VARCHAR}
+		</if>
+		<if test="purchaseBatch != null">
+			and PURCHASE_BATCH = #{purchaseBatch,jdbcType=VARCHAR}
+		</if>
+		<if test="deliveryArea != null">
+			and DELIVERY_AREA = #{deliveryArea,jdbcType=VARCHAR}
+		</if>
+		<if test="deviceSetId != null">
+			and DEVICE_SET_ID = #{deviceSetId,jdbcType=VARCHAR}
+		</if>
+		<if test="hasPosition != null">
+			and HAS_POSITION = #{hasPosition,jdbcType=TINYINT}
+		</if>
+		<if test="deviceStatus !=null">
+			and DEVICE_STATUS=#{deviceStatus}
+		</if>
+
+		ORDER BY CREATE_TIME
+	</select>
+
+	<select id="queryDeviceListByVINorVIN" resultMap="queryDeviceListByVINMap"
+		parameterType="java.lang.String">
+		select
+		dp.DEVICE_SN,dp.DEVICE_MODEL,dp.HARDWARE_VERSION,dp.SW_ID,dp.DELIVERY_AREA
+		as DEVICE_DELIVERY_AREA,dp.SUPPLIER,
+		dp.PURCHASE_BATCH,dp.CREATE_TIME
+		as
+		DEVICE_CREATE_TIME,dp.DEVICE_STATUS,dp.HAS_POSITION,dp.VIN,dp.DEVICE_SET_ID,dp.REMARK,
+		dp.installPosition,
+		sp.ICCID,sp.IMSI,sp.MSISDN,sp.PACKAGE_TYPE,sp.SIM_STATUS,sp.BATCH_NUM,sp.DELIVERY_AREA
+		as SIM_DELIVERY_AREA,
+		sp.CREATE_TIME as SIM_CREATE_TIME
+		from
+		device_profile dp,sim_profile sp
+		where dp.ICCID = sp.ICCID
+		<if test="vin!=null">
+			and dp.VIN =
+			#{vin,jdbcType=VARCHAR};
+		</if>
+		<if test="sn!=null">
+			and dp.DEVICE_SET_ID in (select DEVICE_SET_ID from
+			device_profile where
+			DEVICE_SN = #{sn,jdbcType=VARCHAR});
+		</if>
+	</select>
+
+	<select id="queryDeviceListBySN" resultMap="queryDeviceListBySNMap"
+		parameterType="java.lang.String">
+		select DEVICE_SN,DEVICE_MODEL,HAS_POSITION from
+		device_profile dp
+		where
+		dp.DEVICE_SN=#{deviceSn,jdbcType=VARCHAR}
+		or
+		dp.DEVICE_SET_ID =
+		(select DEVICE_SET_ID from device_profile where
+		DEVICE_SN =
+		#{deviceSn,jdbcType=VARCHAR});
+	</select>
+
+	<select id="pagingList" resultMap="BaseResultMap" parameterType="com.fourthbutton.telematics.pds.entity.DeviceProfile">
+		SELECT * FROM device_profile p where p.RECORD_STATUS ='Y'
+		<if test="vin != null">
+			and p.VIN = #{vin,jdbcType=VARCHAR}
+		</if>
+		<if test="sn != null">
+			and p.DEVICE_SN = #{sn,jdbcType=VARCHAR}
+		</if>
+		<if test="imei != null">
+			and p.IMEI = #{imei,jdbcType=VARCHAR}
+		</if>
+		<if test="batch != null">
+			and p.PURCHASE_BATCH = #{batch,jdbcType=VARCHAR}
+		</if>
+		<if test="status != null">
+			and p.DEVICE_STATUS = #{status,jdbcType=VARCHAR}
+		</if>
+		ORDER BY p.UPDATE_TIME desc
+		limit #{startPage},#{rowsPerPage}
+	</select>
+
+	<select id="findTotalNumber" resultType="java.lang.Integer">
+		select count(*) from
+		device_profile where RECORD_STATUS ='Y'
+	</select>
+	<select id="checkSNByICCID"
+		resultType="com.fourthbutton.telematics.pds.entity.DeviceProfile">
+		>
+		select count(*) from device_profile p where 1=1
+		<if test="sn != null">
+			and p.DEVICE_SN = #{sn,jdbcType=VARCHAR}
+		</if>
+		<if test="iccid !=null">
+
+		</if>
+
+	</select>
+
+	<select id="getSuidBySn" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from device_profile d where d.DEVICE_SN =
+		#{sn}
+	</select>
+
+</mapper>

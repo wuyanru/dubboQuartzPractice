@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fourthbutton.telematics.pds.mapper.PluginMapper" >
+  <resultMap id="BaseResultMap" type="com.fourthbutton.telematics.pds.entity.Plugin" >
+    <id column="PLUGIN_ID" property="pluginId" jdbcType="INTEGER" />
+    <result column="PLUGIN_NAME" property="pluginName" jdbcType="VARCHAR" />
+    <result column="PLUGIN_VERSION" property="pluginVersion" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="CHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.fourthbutton.telematics.pds.entity.Plugin" extends="BaseResultMap" >
+    <result column="CONFIGURATION" property="configuration" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PLUGIN_ID, PLUGIN_NAME, PLUGIN_VERSION, RECORD_STATUS, CREATE_TIME, UPDATE_TIME, 
+    USER_ID
+  </sql>
+  <sql id="Blob_Column_List" >
+    CONFIGURATION
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from plugin
+    where PLUGIN_ID = #{pluginId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from plugin
+    where PLUGIN_ID = #{pluginId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fourthbutton.telematics.pds.entity.Plugin" >
+    insert into plugin (PLUGIN_ID, PLUGIN_NAME, PLUGIN_VERSION, 
+      RECORD_STATUS, CREATE_TIME, UPDATE_TIME, 
+      USER_ID, CONFIGURATION)
+    values (#{pluginId,jdbcType=INTEGER}, #{pluginName,jdbcType=VARCHAR}, #{pluginVersion,jdbcType=VARCHAR}, 
+      #{recordStatus,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{userId,jdbcType=VARCHAR}, #{configuration,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fourthbutton.telematics.pds.entity.Plugin" >
+    insert into plugin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pluginId != null" >
+        PLUGIN_ID,
+      </if>
+      <if test="pluginName != null" >
+        PLUGIN_NAME,
+      </if>
+      <if test="pluginVersion != null" >
+        PLUGIN_VERSION,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="configuration != null" >
+        CONFIGURATION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pluginId != null" >
+        #{pluginId,jdbcType=INTEGER},
+      </if>
+      <if test="pluginName != null" >
+        #{pluginName,jdbcType=VARCHAR},
+      </if>
+      <if test="pluginVersion != null" >
+        #{pluginVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="configuration != null" >
+        #{configuration,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fourthbutton.telematics.pds.entity.Plugin" >
+    update plugin
+    <set >
+      <if test="pluginName != null" >
+        PLUGIN_NAME = #{pluginName,jdbcType=VARCHAR},
+      </if>
+      <if test="pluginVersion != null" >
+        PLUGIN_VERSION = #{pluginVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="configuration != null" >
+        CONFIGURATION = #{configuration,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where PLUGIN_ID = #{pluginId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fourthbutton.telematics.pds.entity.Plugin" >
+    update plugin
+    set PLUGIN_NAME = #{pluginName,jdbcType=VARCHAR},
+      PLUGIN_VERSION = #{pluginVersion,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      USER_ID = #{userId,jdbcType=VARCHAR},
+      CONFIGURATION = #{configuration,jdbcType=LONGVARCHAR}
+    where PLUGIN_ID = #{pluginId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fourthbutton.telematics.pds.entity.Plugin" >
+    update plugin
+    set PLUGIN_NAME = #{pluginName,jdbcType=VARCHAR},
+      PLUGIN_VERSION = #{pluginVersion,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      USER_ID = #{userId,jdbcType=VARCHAR}
+    where PLUGIN_ID = #{pluginId,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 根据plugin_name,plugin_version，查询插件ID -->
+  <select id="findPluginByNameAndVersion" resultMap="BaseResultMap" parameterType="java.util.Map" >
+  <![CDATA[
+     select * from plugin
+     where PLUGIN_NAME = #{pluginName,jdbcType=VARCHAR}
+     and PLUGIN_VERSION = #{pluginVersion,jdbcType=VARCHAR} 
+     order by PLUGIN_ID
+     ]]>
+  </select>
+</mapper>

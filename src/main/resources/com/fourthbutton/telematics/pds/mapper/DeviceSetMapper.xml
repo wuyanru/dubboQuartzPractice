@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fourthbutton.telematics.pds.mapper.DeviceSetMapper">
+	<resultMap id="BaseResultMap"
+		type="com.fourthbutton.telematics.pds.entity.DeviceSet">
+		<id column="DEVICE_SET_ID" property="deviceSetId" jdbcType="VARCHAR" />
+		<result column="SET_TYPE" property="setType" jdbcType="VARCHAR" />
+		<result column="RECORD_STATUS" property="recordStatus"
+			jdbcType="CHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="pageListResultMap" 
+		type="com.fourthbutton.telematics.pds.entity.DeviceProfile">
+		<id column="DEVICE_ID" property="deviceId" jdbcType="VARCHAR" />
+		<result column="CHANNEL_ID" property="channelId" jdbcType="INTEGER" />
+		<result column="OWNER_ID" property="ownerId" jdbcType="VARCHAR" />
+		<result column="DEVICE_TYPE" property="deviceType" jdbcType="VARCHAR" />
+		<result column="TU_ID_TYPE" property="tuIdType" jdbcType="VARCHAR" />
+		<result column="SW_ID" property="swId" jdbcType="VARCHAR" />
+		<result column="PDSN" property="pdsn" jdbcType="VARCHAR" />
+		<result column="VIN" property="vin" jdbcType="VARCHAR" />
+		<result column="PRODUCT_VERSION" property="productVersion"
+			jdbcType="VARCHAR" />
+		<result column="TELECOM_PROVIDER" property="telecomProvider"
+			jdbcType="VARCHAR" />
+		<result column="IMSI" property="imsi" jdbcType="VARCHAR" />
+		<result column="IMEI" property="imei" jdbcType="VARCHAR" />
+		<result column="ICCID" property="iccid" jdbcType="VARCHAR" />
+		<result column="MSISDN" property="msisdn" jdbcType="VARCHAR" />
+		<result column="SSID" property="ssid" jdbcType="VARCHAR" />
+		<result column="WIFI_PIN" property="wifiPin" jdbcType="VARCHAR" />
+		<result column="DEVICE_STATUS" property="deviceStatus"
+			jdbcType="VARCHAR" />
+		<result column="PIN" property="pin" jdbcType="VARCHAR" />
+		<result column="TELECOM_PKG_ID" property="telecomPkgId"
+			jdbcType="VARCHAR" />
+		<result column="ENROLL_FLAG" property="enrollFlag" jdbcType="VARCHAR" />
+		<result column="DESTINATION" property="destination" jdbcType="VARCHAR" />
+		<result column="EOL_DATE" property="eolDate" jdbcType="DATE" />
+		<result column="RECORD_STATUS" property="recordStatus"
+			jdbcType="CHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+		<result column="UPD_VER" property="updVer" jdbcType="VARCHAR" />
+		<result column="HARDWARE_VERSION" property="hardwareVersion"
+			jdbcType="VARCHAR" />
+		<result column="SUPPLIER" property="supplier" jdbcType="VARCHAR" />
+		<result column="DEVICE_SN" property="deviceSn" jdbcType="VARCHAR" />
+		<result column="OEM_ID" property="oemId" jdbcType="VARCHAR" />
+		<result column="PURCHASE_BATCH" property="purchaseBatch"
+			jdbcType="VARCHAR" />
+		<result column="DELIVERY_AREA" property="deliveryArea"
+			jdbcType="VARCHAR" />
+		<result column="DEVICE_MODEL" property="deviceModel" jdbcType="VARCHAR" />
+		<result column="DEVICE_SET_ID" property="deviceSetId" jdbcType="VARCHAR" />
+		<result column="HAS_POSITION" property="hasPosition" jdbcType="TINYINT" />
+	</resultMap>
+
+	<insert id="insertDeviceSet" parameterType="com.fourthbutton.telematics.pds.entity.DeviceSet">
+		insert into
+		device_set(DEVICE_SET_ID,SET_TYPE,RECORD_STATUS,CREATE_TIME,UPDATE_TIME,USER_ID)
+		values
+		(#{deviceSetId},#{setType},#{recordStatus},#{createTime},#{updateTime},#{userId})
+	</insert>
+	<update id="update">
+		update device_set
+		<set>
+			<if test="setType !=null">
+				SET_TYPE =#{setType},
+			</if>
+			<if test="recordStatus!= null">
+				RECORD_STATUS=#{recordStatus},
+			</if>
+			<if test="createTime!= null">
+				CREATE_TIME=#{createTime},
+			</if>
+			<if test="updateTime!= null">
+				UPDATE_TIME=#{updateTime},
+			</if>
+			<if test="userId!= null">
+				USER_ID=#{userId}
+			</if>
+		</set>
+		where DEVICE_SET_ID=#{deviceSetId}
+
+	</update>
+
+	<select id="getPagingListById" resultType="java.lang.String">
+		select DEVICE_SET_ID
+		from device_set
+		<if test="deviceSetId!=null">
+			where DEVICE_SET_ID=#{deviceSetId}
+		</if>
+		group by CREATE_TIME
+		desc limit
+		#{startPage},#{rowsPerPage}
+	</select>
+	<select id="getPagingListCount" resultType="java.lang.Integer">
+		select COUNT(DEVICE_SET_ID) as num from (
+		select s.`DEVICE_SET_ID`  from device_profile p inner join  device_set s on p.device_set_id=s.device_set_id
+		 where p.RECORD_STATUS ='Y'
+		<if test="vin!= null">
+			and p.VIN like '%${vin}%'
+		</if>
+		<if test="deviceSn !=null">
+			and p.DEVICE_SN like '%${deviceSn}%'
+		</if>
+		<if test="imei !=null">
+			and p.IMEI=#{imei}
+		</if>
+		<if test="purchaseBatch !=null">
+			and p.PURCHASE_BATCH like '%${purchaseBatch}%'
+		</if>
+		<if test="deviceStatus !=null">
+			and p.DEVICE_STATUS=#{deviceStatus}
+		</if> 
+		group by s.device_set_id)a
+	</select>
+	
+	<select id="getPagingList" resultMap="pageListResultMap">
+		select pp.* from device_profile pp inner join (
+		select ss.device_set_id from device_set ss inner join (
+		select s.device_set_id  from device_profile p inner join  device_set s on p.device_set_id=s.device_set_id 
+		where p.RECORD_STATUS ='Y'
+		<if test="vin!= null">
+			and p.VIN like '%${vin}%'
+		</if>
+		<if test="deviceSn !=null">
+			and p.DEVICE_SN like '%${deviceSn}%'
+		</if>
+		<if test="imei !=null">
+			and p.IMEI=#{imei}
+		</if>
+		<if test="purchaseBatch !=null">
+			and p.PURCHASE_BATCH like '%${purchaseBatch}%'
+		</if>
+		<if test="deviceStatus !=null">
+			and p.DEVICE_STATUS=#{deviceStatus}
+		</if>
+		group by s.device_set_id) a 
+		on a.device_set_id=ss.device_set_id 
+		order by ss.device_set_id asc,ss.update_time DESC limit #{startPage},#{rowsPerPage})b on pp.device_set_id=b.device_set_id
+	</select>
+ </mapper>

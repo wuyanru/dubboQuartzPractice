@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="com.fourthbutton.telematics.pds.mapper.DeviceSoftwareVersionMapper">
+
+	<resultMap
+		type="com.fourthbutton.telematics.pds.entity.DeviceSoftwareVersion"
+		id="dsv"></resultMap>
+
+	<!-- <sql id="Base_Column_List">
+		SW_ID, SW_VERSION, SW_DESCRIPT, DEVICE_TYPE, PROTOCAL_HEADER_VERSION,
+		PROTOCAL_VERSION,
+		RECORD_STATUS, CREATE_TIME, UPDATE_TIME, USER_ID
+	</sql> -->
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="dsv">
+	SELECT
+	SW_ID as swId,
+	SW_VERSION as swVersion,
+	SW_DESCRIPT as swDescript,
+	DEVICE_TYPE as deviceType,
+	PROTOCAL_HEADER_VERSION as protocalHeaderVersion,
+	PROTOCAL_VERSION as protocalVersion,
+	RECORD_STATUS as recordStatus,
+	CREATE_TIME as createTime,
+	UPDATE_TIME as updateTime,
+	USER_ID as userId
+	FROM
+	device_software_version dsv
+	WHERE
+	dsv.SW_ID = (select dp.SW_ID from device_profile dp where dp.DEVICE_ID
+	=#{deviceId})
+	</select>
+</mapper>

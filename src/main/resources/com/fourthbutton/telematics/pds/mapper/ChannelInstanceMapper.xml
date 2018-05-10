@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fourthbutton.telematics.pds.mapper.ChannelInstanceMapper" >
+  <resultMap id="BaseResultMap" type="com.fourthbutton.telematics.pds.entity.ChannelInstance" >
+    <id column="CHANNEL_INSTANCE_ID" property="channelInstanceId" jdbcType="INTEGER" />
+    <result column="CHANNEL_ID" property="channelId" jdbcType="INTEGER" />
+    <result column="NODE_ID" property="nodeId" jdbcType="INTEGER" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="CHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.fourthbutton.telematics.pds.entity.ChannelInstance" extends="BaseResultMap" >
+    <result column="CONFIGURATION" property="configuration" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CHANNEL_INSTANCE_ID, CHANNEL_ID, NODE_ID, RECORD_STATUS, CREATE_TIME, UPDATE_TIME, 
+    USER_ID
+  </sql>
+  <sql id="Blob_Column_List" >
+    CONFIGURATION
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from channel_instance
+    where CHANNEL_INSTANCE_ID = #{channelInstanceId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from channel_instance
+    where CHANNEL_INSTANCE_ID = #{channelInstanceId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fourthbutton.telematics.pds.entity.ChannelInstance" >
+    insert into channel_instance (CHANNEL_INSTANCE_ID, CHANNEL_ID, NODE_ID, 
+      RECORD_STATUS, CREATE_TIME, UPDATE_TIME, 
+      USER_ID, CONFIGURATION)
+    values (#{channelInstanceId,jdbcType=INTEGER}, #{channelId,jdbcType=INTEGER}, #{nodeId,jdbcType=INTEGER}, 
+      #{recordStatus,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{userId,jdbcType=VARCHAR}, #{configuration,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fourthbutton.telematics.pds.entity.ChannelInstance" >
+    insert into channel_instance
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="channelInstanceId != null" >
+        CHANNEL_INSTANCE_ID,
+      </if>
+      <if test="channelId != null" >
+        CHANNEL_ID,
+      </if>
+      <if test="nodeId != null" >
+        NODE_ID,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="configuration != null" >
+        CONFIGURATION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="channelInstanceId != null" >
+        #{channelInstanceId,jdbcType=INTEGER},
+      </if>
+      <if test="channelId != null" >
+        #{channelId,jdbcType=INTEGER},
+      </if>
+      <if test="nodeId != null" >
+        #{nodeId,jdbcType=INTEGER},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="configuration != null" >
+        #{configuration,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fourthbutton.telematics.pds.entity.ChannelInstance" >
+    update channel_instance
+    <set >
+      <if test="channelId != null" >
+        CHANNEL_ID = #{channelId,jdbcType=INTEGER},
+      </if>
+      <if test="nodeId != null" >
+        NODE_ID = #{nodeId,jdbcType=INTEGER},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="configuration != null" >
+        CONFIGURATION = #{configuration,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where CHANNEL_INSTANCE_ID = #{channelInstanceId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fourthbutton.telematics.pds.entity.ChannelInstance" >
+    update channel_instance
+    set CHANNEL_ID = #{channelId,jdbcType=INTEGER},
+      NODE_ID = #{nodeId,jdbcType=INTEGER},
+      RECORD_STATUS = #{recordStatus,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      USER_ID = #{userId,jdbcType=VARCHAR},
+      CONFIGURATION = #{configuration,jdbcType=LONGVARCHAR}
+    where CHANNEL_INSTANCE_ID = #{channelInstanceId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fourthbutton.telematics.pds.entity.ChannelInstance" >
+    update channel_instance
+    set CHANNEL_ID = #{channelId,jdbcType=INTEGER},
+      NODE_ID = #{nodeId,jdbcType=INTEGER},
+      RECORD_STATUS = #{recordStatus,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      USER_ID = #{userId,jdbcType=VARCHAR}
+    where CHANNEL_INSTANCE_ID = #{channelInstanceId,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 根据node_id查询instance -->
+  <select id="findInstancesByNodeId" resultMap="BaseResultMap" parameterType="java.util.Map" >
+  <![CDATA[
+     select * from channel_instance
+     where NODE_ID = #{nodeId,jdbcType=INTEGER} 
+     order by CHANNEL_INSTANCE_ID
+     ]]>
+  </select>
+  
+</mapper>

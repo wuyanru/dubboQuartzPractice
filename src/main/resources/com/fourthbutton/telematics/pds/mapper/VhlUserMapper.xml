@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fourthbutton.telematics.pds.mapper.VhlUserMapper">
+
+	<resultMap id="BaseResultMap"
+		type="com.fourthbutton.telematics.pds.entity.VhlUser">
+		<result column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="OEM_ID" property="oemId" jdbcType="VARCHAR" />
+		<result column="DESCRIPT" property="descript" jdbcType="VARCHAR" />
+		<result column="USER_TYPE" property="userType" jdbcType="CHAR" />
+		<result column="CREDENTIALS" property="credentials" jdbcType="CHAR" />
+		<result column="CREDENTIALS_NUM" property="credentialsNum"
+			jdbcType="VARCHAR" />
+		<result column="VIP_PROPERTY" property="vipProperty" jdbcType="VARCHAR" />
+		<result column="PIN" property="pin" jdbcType="VARCHAR" />
+		<result column="SEX" property="sex" jdbcType="CHAR" />
+		<result column="MARY" property="mary" jdbcType="CHAR" />
+		<result column="BIRTHDAY" property="birthday" jdbcType="DATE" />
+		<result column="MOBILE_PHONE" property="mobilePhone" jdbcType="VARCHAR" />
+		<result column="PHONE" property="phone" jdbcType="VARCHAR" />
+		<result column="QQ" property="qq" jdbcType="VARCHAR" />
+		<result column="MIN_MESSAGE" property="minMessage" jdbcType="VARCHAR" />
+		<result column="EMAIL" property="email" jdbcType="VARCHAR" />
+		<result column="ADVERTISEMENT" property="advertisement"
+			jdbcType="CHAR" />
+		<result column="PROVINCE_ID" property="provinceId" jdbcType="VARCHAR" />
+		<result column="CITY_ID" property="cityId" jdbcType="VARCHAR" />
+		<result column="COUNTY_ID" property="countyId" jdbcType="VARCHAR" />
+		<result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+		<result column="ZIP" property="zip" jdbcType="VARCHAR" />
+		<result column="HOBBY" property="hobby" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="RECORD_STATUS" property="recordStatus"
+			jdbcType="CHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+		<result column="SYN_NUM" property="synNum" jdbcType="VARCHAR" />
+		<result column="VHL_USER_CODE" property="vhlUserCode" jdbcType="VARCHAR" />
+		<result column="VHLLANGUAGECODE" property="vhllanguagecode"
+			jdbcType="VARCHAR" />
+		<result column="CUSTOMERGROUP" property="customergroup"
+			jdbcType="VARCHAR" />
+		<result column="INSURANCEID" property="insuranceid" jdbcType="VARCHAR" />
+		<result column="INSURANCENAME" property="insurancename"
+			jdbcType="VARCHAR" />
+		<result column="VIP_PREFERENCES" property="vipPreferences"
+			jdbcType="VARCHAR" />
+		<result column="QUESTION_ONE" property="questionOne" jdbcType="VARCHAR" />
+		<result column="ANSWER_ONE" property="answerOne" jdbcType="VARCHAR" />
+		<result column="QUESTION_TWO" property="questionTwo" jdbcType="VARCHAR" />
+		<result column="ANSWER_TWO" property="answerTwo" jdbcType="VARCHAR" />
+		<result column="CONTACT" property="contact" jdbcType="VARCHAR" />
+		<result column="CONTACT_PHONE" property="contactPhone"
+			jdbcType="VARCHAR" />
+		<result column="VHL_MOBILE_PHONE" property="vhlMobilePhone"
+			jdbcType="VARCHAR" />
+		<result column="VHL_USER_PASSWORD" property="vhlUserPassword"
+			jdbcType="VARCHAR" />
+		<result column="DATA_SOURCE" property="dataSource" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+	ID, OEM_ID, DESCRIPT, 
+      USER_TYPE, CREDENTIALS, CREDENTIALS_NUM, 
+      VIP_PROPERTY, PIN, SEX, 
+      MARY, BIRTHDAY, MOBILE_PHONE, 
+      PHONE, QQ, MIN_MESSAGE, 
+      EMAIL, ADVERTISEMENT, PROVINCE_ID, 
+      CITY_ID, COUNTY_ID, ADDRESS, 
+      ZIP, HOBBY, REMARK, 
+      RECORD_STATUS, CREATE_TIME, UPDATE_TIME, 
+      USER_ID, SYN_NUM, VHL_USER_CODE, 
+      VHLLANGUAGECODE, CUSTOMERGROUP, INSURANCEID, 
+      INSURANCENAME, VIP_PREFERENCES, QUESTION_ONE, 
+      ANSWER_ONE, QUESTION_TWO, ANSWER_TWO, 
+      CONTACT, CONTACT_PHONE, VHL_MOBILE_PHONE, 
+      VHL_USER_PASSWORD, DATA_SOURCE
+	</sql>
+	
+	<select id="findByVIN" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+			<include refid="Base_Column_List" />
+		from 
+			customer
+		where 
+			1 = 1 and id = (SELECT vhl_user_id FROM service_contract WHERE DEVICE_ID = 
+			(select DEVICE_ID from device_profile 
+				WHERE vin = #{vin}))
+	</select>
+</mapper>

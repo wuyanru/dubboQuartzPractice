@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fourthbutton.telematics.pds.mapper.ServicePkgMapper" >
+  <resultMap id="BaseResultMap" type="com.fourthbutton.telematics.pds.entity.ServicePkg" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="TELECOM_PKG_ID" property="telecomPkgId" jdbcType="VARCHAR" />
+    <result column="DEVICE_ID" property="deviceId" jdbcType="VARCHAR" />
+    <result column="DEVICE_TYPE" property="deviceType" jdbcType="VARCHAR" />
+    <result column="DESCRIPT" property="descript" jdbcType="VARCHAR" />
+    <result column="PACK_BEGIN_TIME" property="packBeginTime" jdbcType="TIMESTAMP" />
+    <result column="PACK_END_TIME" property="packEndTime" jdbcType="TIMESTAMP" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="CHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" /> 
+    
+    
+  </resultMap> 
+  
+  
+  <sql id="Base_Column_List" >
+  ID,NAME,TELECOM_PKG_ID,DEVICE_ID,DEVICE_TYPE,DESCRIPT,PACK_BEGIN_TIME,PACK_END_TIME,RECORD_STATUS,CREATE_TIME,UPDATE_TIME,USER_ID
+  </sql>
+  <select id="findByVIN" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from service_pkg
+    where 
+    DEVICE_ID=(select SERVICE_PKG_ID from service_contract where DEVICE_ID=(SELECT DEVICE_ID FROM device_profile WHERE VIN = #{vin}))
+  </select>
+</mapper>

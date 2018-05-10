@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fourthbutton.telematics.pds.mapper.ServicePkgItemMapper" >
+  <resultMap id="BaseResultMap" type="com.fourthbutton.telematics.pds.entity.ServicePkgItem" >
+    <id column="SERVICE_ID" property="serviceId" jdbcType="VARCHAR" />
+    <result column="SERVICE_PKG_ID" property="servicePkgId" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="CHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="SERVICE_TYPE" property="serviceType" jdbcType="VARCHAR" />
+  </resultMap> 
+  <sql id="Base_Column_List" >
+    SERVICE_ID, SERVICE_PKG_ID, RECORD_STATUS, CREATE_TIME, UPDATE_TIME, USER_ID, SERVICE_TYPE
+  </sql>
+  <select id="findByVIN" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from service_pkg_item
+    where 
+    SERVICE_PKG_ID = (SELECT SERVICE_PKG_ID from service_contract WHERE device_id=(SELECT DEVICE_ID FROM device_profile WHERE VIN = #{vin}))
+  </select>
+</mapper>

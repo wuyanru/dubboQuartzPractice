@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fourthbutton.telematics.pds.mapper.SimProfileMapper">
+	<resultMap id="BaseResultMap" type="com.fourthbutton.telematics.pds.entity.SimProfile">
+		<id column="ICCID" property="iccId" jdbcType="VARCHAR" />
+		<result column="UPD_VER" property="updVer" jdbcType="VARCHAR" />
+		<result column="MSISDN" property="msisdn" jdbcType="VARCHAR" />
+		<result column="IMSI" property="imsi" jdbcType="VARCHAR" />
+		<result column="SIM_PROFILE_ID" property="simProfileId" jdbcType="VARCHAR" />
+		<result column="SIM_STATUS" property="simStatus" jdbcType="CHAR" />
+		<result column="ACTIVE_DATE" property="activeDate" jdbcType="DATE" />
+		<result column="BATCH_NUM" property="batchNum" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="IP" property="ip" jdbcType="VARCHAR" />
+		<result column="RECORD_STATUS" property="recordStatus" jdbcType="CHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+		<result column="OEM_ID" property="oemId" jdbcType="VARCHAR" />
+		<result column="DELIVERY_AREA" property="deliveryArea" jdbcType="VARCHAR" />
+		<result column="PACKAGE_TYPE" property="packageType" jdbcType="VARCHAR" />
+		<result column="VIN" property="vin" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		ICCID, UPD_VER, MSISDN, IMSI, SIM_PROFILE_ID, SIM_STATUS, ACTIVE_DATE, BATCH_NUM, REMARK, IP, 
+		RECORD_STATUS, CREATE_TIME, UPDATE_TIME, USER_ID, OEM_ID, DELIVERY_AREA, PACKAGE_TYPE,ACTIVATION_TIME
+	</sql>
+	
+	<select id="findByAny" resultMap="BaseResultMap" parameterType="com.fourthbutton.telematics.pds.entity.SimProfile">
+		select
+		<include refid="Base_Column_List" />
+		from sim_profile
+		where RECORD_STATUS ='Y'
+		<if test="iccId != null">
+            and ICCID = #{iccId,jdbcType=VARCHAR}
+        </if>
+        <if test="imsi != null">
+            and IMSI = #{imsi,jdbcType=VARCHAR}
+        </if>
+        <if test="msisdn != null">
+            and MSISDN = #{msisdn,jdbcType=VARCHAR}
+        </if>
+        <if test="deliveryArea != null">
+            and DELIVERY_AREA = #{deliveryArea,jdbcType=VARCHAR}
+        </if>
+        <if test="batchNum != null">
+            and BATCH_NUM = #{batchNum,jdbcType=VARCHAR}
+        </if>
+		ORDER BY CREATE_TIME
+	</select>
+	
+	<select id="findByPageList" resultMap="BaseResultMap">
+		select
+		s.*,d.vin
+		from sim_profile s left join device_profile d on s.ICCID=d.ICCID
+		where s.RECORD_STATUS ='Y'
+		<if test="iccId != null">
+            and s.ICCID like '%${iccId}%'
+        </if>
+        <if test="imsi != null">
+            and s.IMSI = #{imsi}
+        </if>
+        <if test="msisdn != null">
+            and s.MSISDN = #{msisdn}
+        </if>
+        <if test="deliveryArea != null">
+            and s.DELIVERY_AREA = #{deliveryArea}
+        </if>
+        <if test="batchNum != null">
+            and s.BATCH_NUM like '%${batchNum}%'
+        </if>
+        <if test="status != null">
+        	and s.SIM_STATUS=#{status}
+        </if>
+        <if test="vin !=null">
+        	and d.VIN like '%${vin}%'
+        </if>
+ 		ORDER BY s.CREATE_TIME 
+ 		limit #{startPage},#{rowsPerPage}
+	</select>
+	
+	<select id="findByPageCount" resultType="java.lang.Integer">
+		select
+		count(*)
+		from sim_profile s left join device_profile d on s.ICCID=d.ICCID
+		where s.RECORD_STATUS ='Y'
+		<if test="iccId != null">
+            and s.ICCID like '%${iccId}%'
+        </if>
+        <if test="imsi != null">
+            and s.IMSI = #{imsi}
+        </if>
+        <if test="msisdn != null">
+            and s.MSISDN = #{msisdn}
+        </if>
+        <if test="deliveryArea != null">
+            and s.DELIVERY_AREA = #{deliveryArea}
+        </if>
+        <if test="batchNum != null">
+            and s.BATCH_NUM like '%${batchNum}%'
+        </if>
+        <if test="status != null">
+        	and s.SIM_STATUS=#{status}
+        </if>
+        <if test="vin !=null">
+        	and d.VIN like '%${vin}%'
+        </if>
+  	</select>
+	
+	<update id="updateByAny" parameterType="com.fourthbutton.telematics.pds.entity.SimProfile">
+		update sim_profile
+		<set>
+			<if test="simProfile.iccId != null">
+				ICCID = #{simProfile.iccId,jdbcType=VARCHAR},
+			</if>
+			<if test="simProfile.updVer != null">
+				UPD_VER = #{simProfile.updVer,jdbcType=VARCHAR},
+			</if>
+			<if test="simProfile.msisdn != null">
+				MSISDN = #{simProfile.msisdn,jdbcType=VARCHAR},
+			</if>
+			<if test="simProfile.imsi != null">
+				IMSI = #{simProfile.imsi,jdbcType=VARCHAR},
+			</if>
+			<if test="simProfile.simProfileId != null">
+				SIM_PROFILE_ID = #{simProfile.simProfileId,jdbcType=VARCHAR},
+			</if>
+			<if test="simProfile.simStatus != null">
+				SIM_STATUS = #{simProfile.simStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="simProfile.activeDate != null">
+				ACTIVE_DATE = #{simProfile.activeDate,jdbcType=date},
+			</if>
+			<if test="simProfile.batchNum != null">
+				BATCH_NUM = #{simProfile.batchNum,jdbcType=VARCHAR},
+			</if>
+			<if test="simProfile.remark != null">
+				REMARK = #{simProfile.remark,jdbcType=VARCHAR},
+			</if>
+			<if test="simProfile.ip != null">
+				IP = #{simProfile.ip,jdbcType=VARCHAR},
+			</if>
+			<if test="simProfile.recordStatus != null">
+				RECORD_STATUS = #{simProfile.recordStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="simProfile.updateTime != null">
+				UPDATE_TIME = #{simProfile.updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="simProfile.userId != null">
+				USER_ID = #{simProfile.userId,jdbcType=VARCHAR},
+			</if>
+			<if test="simProfile.oemId != null">
+				OEM_ID = #{simProfile.oemId,jdbcType=VARCHAR},
+			</if>
+			<if test="simProfile.deliveryArea != null">
+				DELIVERY_AREA = #{simProfile.deliveryArea,jdbcType=VARCHAR},
+			</if>
+			<if test="simProfile.packageType != null">
+				PACKAGE_TYPE = #{simProfile.packageType,jdbcType=VARCHAR},
+			</if>
+			<if test="simProfile.activationTime != null">
+				ACTIVATION_TIME = #{simProfile.activationTime,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<where>
+			<if test="iccId != null">
+				and ICCID = #{iccId,jdbcType=VARCHAR}
+			</if>
+			<if test="msisdn != null">
+				and MSISDN = #{msisdn,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</update>
+										
+	<insert id="insert" parameterType="com.fourthbutton.telematics.pds.entity.SimProfile">
+		insert into sim_profile values(#{iccId},#{updVer},#{msisdn},#{imsi},#{simProfileId},#{simStatus},#{activeDate},#{batchNum},#{remark},#{ip},
+			#{recordStatus},#{createTime},#{updateTime},#{userId},#{oemId},#{deliveryArea},#{packageType},#{activationTime})
+	</insert>
+</mapper>
