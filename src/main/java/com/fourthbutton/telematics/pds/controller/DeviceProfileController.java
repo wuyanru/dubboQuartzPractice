@@ -15,14 +15,16 @@ import com.fourthbutton.telematics.pds.service.DeviceProfileService;
  * @author yf
  * @date 2015年6月9日 下午3:58:19
  * @version V1.0
+ * function 根据vin获取suid,获取device信息
  */
-@RestController
+@RestController/*如果只是使用@RestController注解Controller，则Controller中的方法无法返回jsp页面，
+配置的视图解析器InternalResourceViewResolver不起作用，返回的内容就是Return 里的内容。*/
 @RequestMapping("/deviceProfiles/v1")
 public class DeviceProfileController {
 
     private final static Logger logger = LoggerFactory.getLogger(DeviceProfileController.class);
 
-    @Autowired
+    @Autowired//@Autowired是用在JavaBean中的注解，通过byType形式，用来给指定的字段或方法注入所需的外部资源。
     DeviceProfileService dpService;
 
     /**
@@ -32,8 +34,8 @@ public class DeviceProfileController {
      * @param 可能是su_id或者是vin号(tu_id_type)
      */
     @RequestMapping(value = "/byDeviceId/{id}", method = RequestMethod.GET,
-            produces = "application/json")
-    public DeviceProfile selectByVIN(@PathVariable String id) {
+            produces = "application/json")//处理方法将生产json格式的数据
+    public DeviceProfile selectByVIN(@PathVariable String id) {//将请求URL中的模板变量映射到处理方法的参数上
         logger.debug("the id is --->" + id);
         // suid
         DeviceProfile result = dpService.selectByPrimaryKey(id);
